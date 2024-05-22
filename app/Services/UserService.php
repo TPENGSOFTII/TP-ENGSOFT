@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Repositories\UserRepositoryInterface;
+use App\Repositories\User\UserRepositoryInterface;
 
 class UserService
 {
