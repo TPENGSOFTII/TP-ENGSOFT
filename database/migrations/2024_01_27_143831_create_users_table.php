@@ -6,26 +6,26 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('cars', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->id();
-            $table->string('brand');
-            $table->string('model');
-            $table->string('license_plate');
-            $table->string('color');
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->date('birth_date');
             $table->softDeletes();
-            $table->timestamps();
             $table->timestamps();
         });
     }
 
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
     public function down(): void
     {
-        Schema::dropIfExists('cars');
+        Schema::dropIfExists('users');
     }
 };

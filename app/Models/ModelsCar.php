@@ -14,9 +14,4 @@ class Car extends Model
     ];
 
     protected $dates = ['deleted_at'];
-
-    public function users()
-    {
-        return $this->belongsToMany(User::class);
-    }
 }
