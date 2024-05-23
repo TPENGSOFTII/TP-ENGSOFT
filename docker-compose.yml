@@ -1,0 +1,24 @@
+services:
+  
+  teste-multipedidos:
+    container_name: teste-multipedidos
+    build: .
+    volumes:
+      - ./teste-multipedidos:/var/www/html
+    ports:
+      - 9000:80
+
+  mysql_db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: teste_multipedidos
+    ports:
+      - 3306:3306
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    ports:
+      - 9001:80
+    environment:
+      - PMA_ARBITRARY=1
