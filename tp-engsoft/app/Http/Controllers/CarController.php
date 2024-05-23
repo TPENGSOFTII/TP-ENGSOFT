@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Car\CreateCarRequest;
 use App\Http\Requests\Car\UpdateCarRequest;
 use App\Services\CarService;
+use App\Http\Controllers\Base\BaseApiController;
 
 class CarController extends BaseApiController
 {
