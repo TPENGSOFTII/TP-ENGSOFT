@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Car\CreateCarRequest;
 use App\Http\Requests\Car\UpdateCarRequest;
-use App\Exceptions\EntityNotFoundException;
-
 use App\Services\CarService;
 
-class CarController extends Controller
+class CarController extends BaseApiController
 {
     protected $carService;
 
@@ -19,52 +17,23 @@ class CarController extends Controller
 
     public function createCar(CreateCarRequest $request)
     {
-        try {
-            $carData = $request->validated();
-
-            $car = $this->carService->createCar($carData);
-
-            return response()->json(['car' => $car], 201);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Erro interno do servidor.'], 500);
-        }
+        $carData = $request->validated();
+        return $this->handleCreate($carData, [$this->carService, 'createCar']);
     }
 
-    public function getAllCars()
-    {
-        try {
-            $cars = $this->carService->getAllCars();
-
-            return response()->json(['cars' => $cars], 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Erro interno do servidor.'], 500);
-        }
-    }
     public function updateCar($id, UpdateCarRequest $request)
     {
-        try {
-            $carData = $request->validated();
-
-            $this->carService->updateCar($id, $carData);
-
-            return response()->json(['message' => 'Carro atualizado com sucesso.'], 200);
-        } catch (EntityNotFoundException $e) {
-            return response()->json(['error' => $e->getMessage()], 404);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Erro interno do servidor.'], 500);
-        }
+        $carData = $request->validated();
+        return $this->handleUpdate($id, $carData, [$this->carService, 'updateCar']);
     }
 
     public function deleteCar($id)
     {
-        try {
-            $this->carService->deleteCar($id);
+        return $this->handleDelete($id, [$this->carService, 'deleteCar'], "Carro");
+    }
 
-            return response()->json(['message' => 'Carro deletado com sucesso.'], 200);
-        } catch (EntityNotFoundException $e) {
-            return response()->json(['error' => $e->getMessage()], 404);
-        } catch (\Exception $e) {
-            return response()->json($e->getMessage(), 500);
-        }
+    public function getAllCars()
+    {
+        return $this->handleGetAll([$this->carService, 'getAllCars']);
     }
 }

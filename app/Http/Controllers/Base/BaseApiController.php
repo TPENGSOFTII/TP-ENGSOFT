@@ -54,4 +54,13 @@ class BaseApiController extends Controller
             return $this->handleException($e);
         }
     }
+    protected function handleGetAll(callable $serviceMethod)
+    {
+        try {
+            $result = call_user_func($serviceMethod);
+            return $this->jsonResponse($result, 200);
+        } catch (\Exception $e) {
+            return $this->handleException($e);
+        }
+    }
 }
