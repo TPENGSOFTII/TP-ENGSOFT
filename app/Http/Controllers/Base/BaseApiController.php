@@ -54,11 +54,24 @@ class BaseApiController extends Controller
             return $this->handleException($e);
         }
     }
-    protected function handleGetAll(callable $serviceMethod)
+    protected function handleGetAll(callable $serviceMethod, $id = null)
     {
         try {
-            $result = call_user_func($serviceMethod);
+            $result = $id !== null ? call_user_func($serviceMethod, $id) : call_user_func($serviceMethod);
             return $this->jsonResponse($result, 200);
+        } catch (\Exception $e) {
+            return $this->handleException($e);
+        }
+    }
+
+    protected function handleAssociationOrDisassociation(int $userId, int $carId, callable $serviceMethod, bool $isAssociation)
+    {
+        try {
+            $sucessMessage = $isAssociation ? 'Usuário associado ao carro com sucesso.' : 'Usuário desassociado do carro com sucesso.';
+            call_user_func($serviceMethod, $userId, $carId);
+            return $this->jsonResponse(['message' => $sucessMessage], 200);
+        } catch (EntityNotFoundException $e) {
+            return $this->handleEntityNotFoundException($e);
         } catch (\Exception $e) {
             return $this->handleException($e);
         }
