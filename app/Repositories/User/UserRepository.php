@@ -3,6 +3,7 @@
 namespace App\Repositories\User;
 
 use App\Models\User;
+use App\Exceptions\EntityNotFoundException;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -13,7 +14,13 @@ class UserRepository implements UserRepositoryInterface
 
     public function findById($id)
     {
-        return User::findOrFail($id);
+        $user = User::find($id);
+
+        if (!$user) {
+            throw new EntityNotFoundException('usuário');
+        }
+
+        return $user;
     }
 
     public function update($id, $data)
