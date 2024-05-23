@@ -1,0 +1,24 @@
+services:
+  
+  tp-engsoft:
+    container_name: tp-engsoft
+    build: .
+    volumes:
+      - ./tp-engsoft:/var/www/html
+    ports:
+      - 9001:80
+
+  mysql_db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: tp-engsoft
+    ports:
+      - 3307:3307
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    ports:
+      - 9002:80
+    environment:
+      - PMA_ARBITRARY=1
