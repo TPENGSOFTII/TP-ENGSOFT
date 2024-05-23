@@ -17,4 +17,14 @@ class CarService
     {
         return $this->carRepository->create($data);
     }
+
+    public function getAllCars()
+    {
+        return $this->carRepository->getAll();
+    }
+
+    public function updateCar($id, $data)
+    {
+        return $this->carRepository->update($id, $data);
+    }
 }

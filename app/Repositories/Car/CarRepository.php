@@ -10,5 +10,21 @@ class CarRepository implements CarRepositoryInterface
     {
         return Car::create($data);
     }
+    public function getAll()
+    {
+        return Car::all();
+    }
+    
+    public function findById($id)
+    {
+        return Car::findOrFail($id);
+    }
 
+    public function update($id, $data)
+    {
+        $car = $this->findById($id);
+        $car->update($data);
+
+        return $car;
+    }
 }
