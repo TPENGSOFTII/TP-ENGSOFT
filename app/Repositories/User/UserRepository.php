@@ -24,7 +24,11 @@ class UserRepository implements UserRepositoryInterface
         return $user;
     }
 
-    public function delete($id){
-        return User::destroy($id);
+    public function delete($id)
+    {
+        $user = $this->findById($id);
+        $user->cars()->detach();
+
+        return $user->delete();
     }
 }

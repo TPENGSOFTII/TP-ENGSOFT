@@ -22,7 +22,7 @@ class User extends Model
 
     public function cars()
     {
-        return $this->belongsToMany(Car::class);
+        return $this->belongsToMany(Car::class, 'car_user');
     }
 
     protected static function boot()

@@ -49,7 +49,7 @@ class UserController extends Controller
 
             return response()->json(['message' => 'Usuário deletado com sucesso.'], 200);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Erro interno do servidor.'], 500);
+            return response()->json($e->getMessage(), 500);
         }
     }
 }
