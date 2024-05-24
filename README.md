@@ -62,7 +62,8 @@ O PHPAdmin estará disponível em [http://localhost:9002](http://localhost:9002)
 
 bash
 make stop
-                                                                                              ## Endpoints
+
+## Endpoints
 
 O projeto conta com uma Collection do Postman na qual estão documentados todos os endpoints disponíveis:
 [Collection](https://drive.google.com/file/d/1A0rxc3gIvMx0VkjBEjgfCSzh1baVE9J5/view)
