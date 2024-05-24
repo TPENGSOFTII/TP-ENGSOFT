@@ -2,8 +2,11 @@
 
 ## Alunos 
 Cleifson da Silva Araújo (mat.2021040130)
-Eduardo(---)
+
+Eduardo Pinto Esteves Farias (mat.2021039921)
+
 Pedro Gomes Santiago Pires Beltrão (mat. 2021039760)
+
 Vitor Hugo Coelho Cruz (mat 2021039514)
 
 ## Visão Geral
