@@ -1,8 +1,16 @@
-# Teste Multipedidos
+# TP Engenharia de Software II
+
+##Alunos 
+Cleifson da Silva Araújo (mat.2021040130)
+Eduardo(---)
+Pedro Gomes Santiago Pires Beltrão (mat. 2021039760)
+Vitor Hugo Coelho Cruz (mat 2021039514)
 
 ## Visão Geral
 
-Este é um projeto PHP/Laravel, empacotado em contêineres Docker e gerenciado pelo Docker Compose. Inclui também testes automatizados que podem ser executados usando `make test` e uma Collection com todos os endpoints documentados.
+Este é um projeto PHP/Laravel, empacotado em contêineres Docker e gerenciado pelo Docker Compose.
+
+Este projeto é uma simulação de uma API para aluguel de carros, a qual possui os objetos User e Cars e realiza a associação entre esses.
 
 ## Pré-requisitos
 
@@ -14,11 +22,11 @@ Certifique-se de ter as seguintes ferramentas instaladas:
 
 ## Configuração do Ambiente de Desenvolvimento
 
-**Clone o Repositório:**
-   ```bash
-   git clone git@github.com:vitorugoc/desafio-multipedidos-vitor.git
-   cd desafio-multipedidos-vitor
-   ```
+*Clone o Repositório:*
+   bash
+   git@github.com:TPENGSOFTII/TP-ENGSOFT.git
+   cd TP-ENGSOFT 
+   
 
 ## Docker e Docker Compose
 
@@ -27,45 +35,31 @@ Além disso, possui um Makefile com os principais comandos para facilitar a conf
 
 ### Iniciar os Contêineres e Instalar Dependências
 
-```bash
+bash
 make setup
-```
+
 
 ## Configurar Projeto
 
-```bash
+bash
 cp .env.example .env
 make generate-key
-```
+
 
 ## Migrar Tabelas e Dados
-```bash
+bash
 make data
-```
 
-A aplicação estará disponível em [http://localhost:9000](http://localhost:9000).
 
-O PHPAdmin estará disponível em [http://localhost:9001](http://localhost:9001).
+A aplicação estará disponível em [http://localhost:9001](http://localhost:9001).
+
+O PHPAdmin estará disponível em [http://localhost:9002](http://localhost:9002).
 
 ### Parar os Contêineres
 
-```bash
+bash
 make stop
-```
-
-## Endpoints
+                                                                                              ## Endpoints
 
 O projeto conta com uma Collection do Postman na qual estão documentados todos os endpoints disponíveis:
 [Collection](https://drive.google.com/file/d/1A0rxc3gIvMx0VkjBEjgfCSzh1baVE9J5/view)
-
-## Testes
-
-Os testes automatizados são escritos utilizando [PHPUnit](https://phpunit.de/) e [Laravel Testing](https://laravel.com/docs/10.x/testing).
-
-### Executar Testes
-
-```bash
-make test
-```
-
-Isso iniciará a execução dos testes e exibirá os resultados no console.
