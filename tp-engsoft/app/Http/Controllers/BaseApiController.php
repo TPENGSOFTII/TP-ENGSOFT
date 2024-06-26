@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Base;
+namespace App\Http\Controllers;
 
 use App\Exceptions\EntityNotFoundException;
-use App\Http\Controllers\Controller;
 
 class BaseApiController extends Controller
 {

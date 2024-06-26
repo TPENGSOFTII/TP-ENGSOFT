@@ -18,17 +18,17 @@ class UserController extends BaseApiController
     public function createUser(CreateUserRequest $request)
     {
         $userData = $request->validated();
-        return $this->handleCreate($userData, [$this->userService, 'createUser']);
+        return $this->handleCreate($userData, [$this->userService, 'create']);
     }
 
     public function updateUser($id, UpdateUserRequest $request)
     {
         $userData = $request->validated();
-        return $this->handleUpdate($id, $userData, [$this->userService, 'updateUser']);
+        return $this->handleUpdate($id, $userData, [$this->userService, 'update']);
     }
 
     public function deleteUser($id)
     {
-        return $this->handleDelete($id, [$this->userService, 'deleteUser'], 'Usuário');
+        return $this->handleDelete($id, [$this->userService, 'delete'], 'Usuário');
     }
 }

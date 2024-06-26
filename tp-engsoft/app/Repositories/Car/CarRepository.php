@@ -3,43 +3,22 @@
 namespace App\Repositories\Car;
 
 use App\Models\Car;
-use App\Exceptions\EntityNotFoundException;
+use App\Repositories\Base\BaseRepository;
 
-class CarRepository implements CarRepositoryInterface
+class CarRepository extends BaseRepository implements CarRepositoryInterface
 {
-    public function create(array $data)
+    public function __construct(Car $car)
     {
-        return Car::create($data);
-    }
-    public function getAll()
-    {
-        return Car::all();
+        parent::__construct($car);
     }
 
-    public function findById($id)
+    protected function getEntityName()
     {
-        $car = Car::find($id);
-
-        if (!$car) {
-            throw new EntityNotFoundException('carro');
-        }
-
-        return $car;
+        return 'carro';
     }
-
-    public function update($id, $data)
+    
+    protected function handleDeleteRelations($car)
     {
-        $car = $this->findById($id);
-        $car->update($data);
-
-        return $car;
-    }
-
-    public function delete($id)
-    {
-        $car = $this->findById($id);
         $car->users()->detach();
-
-        return $car->delete();
     }
 }

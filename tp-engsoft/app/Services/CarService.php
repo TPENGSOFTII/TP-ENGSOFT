@@ -4,31 +4,10 @@ namespace App\Services;
 
 use App\Repositories\Car\CarRepositoryInterface;
 
-class CarService
+class CarService extends BaseService
 {
-    protected $carRepository;
-
     public function __construct(CarRepositoryInterface $carRepository)
     {
-        $this->carRepository = $carRepository;
-    }
-
-    public function createCar(array $data)
-    {
-        return $this->carRepository->create($data);
-    }
-
-    public function getAllCars()
-    {
-        return $this->carRepository->getAll();
-    }
-
-    public function updateCar($id, $data)
-    {
-        return $this->carRepository->update($id, $data);
-    }
-
-    public function deleteCar($id){
-        return $this->carRepository->delete($id);
+        parent::__construct($carRepository);
     }
 }

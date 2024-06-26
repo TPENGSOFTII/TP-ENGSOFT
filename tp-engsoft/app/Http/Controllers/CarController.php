@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Car\CreateCarRequest;
 use App\Http\Requests\Car\UpdateCarRequest;
 use App\Services\CarService;
-use App\Http\Controllers\Base\BaseApiController;
 
 class CarController extends BaseApiController
 {
@@ -19,22 +18,22 @@ class CarController extends BaseApiController
     public function createCar(CreateCarRequest $request)
     {
         $carData = $request->validated();
-        return $this->handleCreate($carData, [$this->carService, 'createCar']);
+        return $this->handleCreate($carData, [$this->carService, 'create']);
     }
 
     public function updateCar($id, UpdateCarRequest $request)
     {
         $carData = $request->validated();
-        return $this->handleUpdate($id, $carData, [$this->carService, 'updateCar']);
+        return $this->handleUpdate($id, $carData, [$this->carService, 'update']);
     }
 
     public function deleteCar($id)
     {
-        return $this->handleDelete($id, [$this->carService, 'deleteCar'], "Carro");
+        return $this->handleDelete($id, [$this->carService, 'delete'], "Carro");
     }
 
     public function getAllCars()
     {
-        return $this->handleGetAll([$this->carService, 'getAllCars']);
+        return $this->handleGetAll([$this->carService, 'getAll']);
     }
 }

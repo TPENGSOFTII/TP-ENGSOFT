@@ -2,10 +2,9 @@
 
 namespace App\Repositories\User;
 
-interface UserRepositoryInterface
+use App\Repositories\Base\BaseRepositoryInterface;
+
+interface UserRepositoryInterface extends BaseRepositoryInterface
 {
-    public function create(array $data);
-    public function update(array $data, $id);
-    public function delete($id);
-    public function findById($id);
+
 }

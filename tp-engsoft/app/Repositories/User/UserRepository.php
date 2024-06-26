@@ -3,39 +3,22 @@
 namespace App\Repositories\User;
 
 use App\Models\User;
-use App\Exceptions\EntityNotFoundException;
+use App\Repositories\Base\BaseRepository;
 
-class UserRepository implements UserRepositoryInterface
+class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
-    public function create(array $data)
+    public function __construct(User $user)
     {
-        return User::create($data);
+        parent::__construct($user);
     }
 
-    public function findById($id)
+    protected function getEntityName()
     {
-        $user = User::find($id);
-
-        if (!$user) {
-            throw new EntityNotFoundException('usuário');
-        }
-
-        return $user;
+        return 'usuário';
     }
 
-    public function update($id, $data)
+    protected function handleDeleteRelations($user)
     {
-        $user = $this->findById($id);
-        $user->update($data);
-
-        return $user;
-    }
-
-    public function delete($id)
-    {
-        $user = $this->findById($id);
         $user->cars()->detach();
-
-        return $user->delete();
     }
 }
