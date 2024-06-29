@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 class User extends Model
 {
     use SoftDeletes;
+    use HasFactory;
 
     protected $fillable = [
         'name', 'email', 'password', 'birth_date',
