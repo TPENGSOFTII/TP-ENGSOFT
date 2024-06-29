@@ -28,7 +28,7 @@ jobs:
       run: composer install --working-dir=tp-engsoft --prefer-dist --no-progress --no-suggest
 
     - name: Create .env file
-      run: cp tp-engsoft/.env.example tp-engsoft/.env
+      run: cp tp-engsoft/.env.test tp-engsoft/.env
       shell: bash
 
     - name: Configure environment for SQLite in-memory
