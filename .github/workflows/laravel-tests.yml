@@ -1,0 +1,47 @@
+name: Laravel Tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        php: ['8.1', '8.2']
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php }}
+        tools: composer
+        extensions: pdo_sqlite 
+
+    - name: Install dependencies
+      run: composer install --working-dir=tp-engsoft --prefer-dist --no-progress --ignore-platform-req=ext-fileinfo
+
+    - name: Create .env file
+      run: cp tp-engsoft/.env.test tp-engsoft/.env
+      shell: bash
+
+    - name: Configure environment for SQLite in-memory
+      run: |
+        echo -e "\nDB_CONNECTION=sqlite" >> tp-engsoft/.env
+        echo -e "\nDB_DATABASE=:memory:" >> tp-engsoft/.env
+      shell: bash
+
+    - name: Run migrations
+      run: php tp-engsoft/artisan migrate --force
+      shell: bash
+
+    - name: Run tests
+      run: php tp-engsoft/vendor/bin/phpunit -c tp-engsoft/phpunit.xml
+      shell: bash

@@ -1,21 +1,21 @@
 <?php
-
 namespace Database\Factories;
 
-use App\Models\Car;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 
-class CarFactory extends Factory
+class UserFactory extends Factory
 {
-    protected $model = Car::class;
+    protected $model = User::class;
 
     public function definition()
     {
         return [
-            'brand' => $this->faker->word,
-            'model' => $this->faker->word,
-            'license_plate' => $this->faker->unique()->regexify('[A-Z]{3}[0-9]{3}'),
-            'color' => $this->faker->colorName,
+            'name' => $this->faker->name,
+            'email' => $this->faker->unique()->safeEmail,
+            'password' => Hash::make('password123'),
+            'birth_date' => $this->faker->date(),
         ];
     }
 }
