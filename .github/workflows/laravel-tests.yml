@@ -63,7 +63,13 @@ jobs:
           sleep 1
         done
 
-    - name: Run tests
+    - name: Check if PHPUnit is installed
       run: |
-          php tp-engsoft/artisan test
+        if [ ! -f "tp-engsoft/vendor/bin/phpunit" ]; then
+          echo "PHPUnit not found! Installing..."
+          composer require --dev phpunit/phpunit:^9.5 --working-dir=tp-engsoft
+        fi
+
+    - name: Run tests
+      run: php tp-engsoft/vendor/bin/phpunit
 
