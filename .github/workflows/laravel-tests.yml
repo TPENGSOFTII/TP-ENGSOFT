@@ -11,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest]
         php: ['8.1', '8.2']
 
     services:
@@ -21,7 +21,7 @@ jobs:
           - 3306:3306
         env:
           MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: TP-ENGSOFT
+          MYSQL_DATABASE: tp_engsoft
         options: >-
           --health-cmd="mysqladmin ping --silent"
           --health-interval=10s
@@ -45,24 +45,23 @@ jobs:
       run: cp tp-engsoft/.env.example tp-engsoft/.env
       shell: bash
 
-    - name: Generate application key
-      run: php tp-engsoft/artisan key:generate
-
-    - name: Configure environment
+    - name: Update .env for MySQL service
       run: |
-        php tp-engsoft/artisan config:cache
-        php tp-engsoft/artisan route:cache
-        php tp-engsoft/artisan view:cache
+        sed -i 's/DB_HOST=.*/DB_HOST=mysql/' tp-engsoft/.env
+        sed -i 's/DB_DATABASE=.*/DB_DATABASE=tp_engsoft/' tp-engsoft/.env
+        sed -i 's/DB_USERNAME=.*/DB_USERNAME=root/' tp-engsoft/.env
+        sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=root/' tp-engsoft/.env
+      shell: bash
 
-    - name: Set up database
-      env:
-        DB_CONNECTION: mysql
-        DB_HOST: 127.0.0.1
-        DB_PORT: 3306
-        DB_DATABASE: TP-ENGSOFT
-        DB_USERNAME: root
-        DB_PASSWORD: root
-      run: php tp-engsoft/artisan migrate --force
+    - name: Wait for MySQL to be ready
+      run: |
+        for i in {30..0}; do
+          if php tp-engsoft/artisan migrate --force; then
+            break
+          fi
+          echo 'Waiting for MySQL to be ready...'
+          sleep 1
+        done
 
     - name: Run tests
       run: php tp-engsoft/artisan test
