@@ -71,5 +71,5 @@ jobs:
         fi
 
     - name: Run tests
-      run: php tp-engsoft/vendor/bin/phpunit
-
+      run: php tp-engsoft/vendor/bin/phpunit -c tp-engsoft/phpunit.xml
+      shell: bash
