@@ -65,8 +65,5 @@ jobs:
 
     - name: Run tests
       run: |
-        if [ -f "tp-engsoft/vendor/bin/phpunit" ]; then
-          php tp-engsoft/vendor/bin/phpunit
-        else
           php tp-engsoft/artisan test
-        fi
+
