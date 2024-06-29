@@ -2,7 +2,9 @@ name: Laravel Tests
 
 on:
   push:
-    branches: [master]
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   test:
@@ -11,6 +13,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         php: ['8.1', '8.2']
+
     services:
       mysql:
         image: mysql:8.0
@@ -36,13 +39,20 @@ jobs:
         tools: composer, phpunit
 
     - name: Install dependencies
-      run: composer install --prefer-dist --no-progress --no-suggest
+      run: composer install --working-dir=tp-engsoft --prefer-dist --no-progress --no-suggest
 
     - name: Create .env file
-      run: |
-        cp .env.example .env
-        php artisan key:generate
+      run: cp tp-engsoft/.env.example tp-engsoft/.env
       shell: bash
+
+    - name: Generate application key
+      run: php tp-engsoft/artisan key:generate
+
+    - name: Configure environment
+      run: |
+        php tp-engsoft/artisan config:cache
+        php tp-engsoft/artisan route:cache
+        php tp-engsoft/artisan view:cache
 
     - name: Set up database
       env:
@@ -52,7 +62,7 @@ jobs:
         DB_DATABASE: laravel_test
         DB_USERNAME: root
         DB_PASSWORD: root
-      run: php artisan migrate --force
+      run: php tp-engsoft/artisan migrate --force
 
     - name: Run tests
-      run: php artisan test
+      run: php tp-engsoft/artisan test
