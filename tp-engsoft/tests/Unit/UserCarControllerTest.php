@@ -78,6 +78,41 @@ class UserCarControllerTest extends TestCase
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
     }
 
+    public function testAssociateUserToCarAlreadyAssociated()
+    {
+        $userId = 1;
+        $carId = 1;
+
+        $requestMock = Mockery::mock(Request::class);
+
+        $this->userCarServiceMock
+            ->shouldReceive('associateUserToCar')
+            ->once()
+            ->with($userId, $carId)
+            ->andReturn(false);
+
+        $response = $this->userCarController->associateUserToCar($userId, $carId, $requestMock);
+
+        $this->assertInstanceOf(JsonResponse::class, $response);
+        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+    }
+
+    public function testGetUserCarsNoCars()
+    {
+        $userId = 1;
+
+        $this->userCarServiceMock
+            ->shouldReceive('getUserCars')
+            ->once()
+            ->with($userId)
+            ->andReturn([]);
+        $response = $this->userCarController->getUserCars($userId);
+
+        $this->assertInstanceOf(JsonResponse::class, $response);
+        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+        $this->assertEquals([], $response->getData(true));
+    }
+
     public function tearDown(): void
     {
         Mockery::close();
